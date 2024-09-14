@@ -14,7 +14,7 @@ Export-ModuleMember -Alias * –Function @(Get-Command –Module $ExecutionConte
 #region Variables
 
 $Script:APIVersion = 'v2' # API version used in API calls.
-$Script:BaseAPIUri = "https://api.digitalocean.com" # Base API uri used in API calls.
+$Script:BaseAPIUri = 'https://api.digitalocean.com' # Base API uri used in API calls.
 $Script:APIToken = $null # Initializing null API token for reference.
 $Script:CommonHeaders = @{ # Common headers used in API calls.
     'Content-Type' = 'application/json';

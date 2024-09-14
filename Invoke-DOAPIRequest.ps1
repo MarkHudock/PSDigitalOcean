@@ -45,7 +45,7 @@ Function Invoke-DOAPIRequest {
 
         ## Fix the uri if a full uri is specified. This gives flexibility to where the uri can either be partial or full.
         If ($Uri -notmatch $Script:BaseAPIUri) {
-            $Uri = ("{0}/{1}/{2}" -f $Script:BaseAPIUri, (Get-DOAPIVersion), $Uri)
+            $Uri = ('{0}/{1}/{2}' -f $Script:BaseAPIUri, (Get-DOAPIVersion), $Uri)
         }
 
         ## Parameters used in the API call.
@@ -58,7 +58,7 @@ Function Invoke-DOAPIRequest {
         ## Require a body for Methods that require it.
         If ($Method -in @('POST', 'PUT', 'PATCH')) {
             If ($null -eq $Body) {
-                Throw ("A Body is required for the {0} method." -f $Method)
+                Throw ('A Body is required for the {0} method.' -f $Method)
             } Else {
                 $params.Add('Body', $Body)
             }
@@ -67,13 +67,13 @@ Function Invoke-DOAPIRequest {
         ## Handle pagination if specified with paging parameters.
         If ($PSCmdlet.PagingParameters.First -gt 0 -and $PSCmdlet.PagingParameters.First -lt [UInt64]::MaxValue) {
             If ($params.Uri -match '\?.+$') {
-                $params.Uri = ("{0}&per_page={1}" -f $params.Uri, $PSCmdlet.PagingParameters.First)
+                $params.Uri = ('{0}&per_page={1}' -f $params.Uri, $PSCmdlet.PagingParameters.First)
             } Else {
-                $params.Uri = ("{0}?per_page={1}" -f $params.Uri, $PSCmdlet.PagingParameters.First)
+                $params.Uri = ('{0}?per_page={1}' -f $params.Uri, $PSCmdlet.PagingParameters.First)
             }
         }
 
-        Write-Verbose ("Executing {0} API call to: {1}" -f $Method, $params.Uri)
+        Write-Verbose ('Executing {0} API call to: {1}' -f $Method, $params.Uri)
 
         ## Execute the API call, writing out the results, if any.
         $results = Invoke-RestMethod @params -ErrorAction Stop
